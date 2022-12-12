@@ -1,0 +1,28 @@
+{
+    "name": "top-todo-list",
+    "version": "1.0.0",
+    "description": "Project from www.theodinproject.com. The project goal is to create a todo list with classes, modules and general good coding practices.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack",
+        "watch": "webpack --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CantarinoG/top-todo-list.git"
+    },
+    "author": "CantarinoG",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/CantarinoG/top-todo-list/issues"
+    },
+    "homepage": "https://github.com/CantarinoG/top-todo-list#readme",
+    "devDependencies": {
+        "css-loader": "^6.7.2",
+        "html-webpack-plugin": "^5.5.0",
+        "style-loader": "^3.3.1",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.0"
+    }
+}
