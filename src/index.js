@@ -1,11 +1,16 @@
 import './styles/mainLayout.css';
 import './styles/header.css';
+import './styles/nav.css';
 
 import { renderLayout } from "./UI/mainLayout";
 import { renderHeader } from './UI/header';
+import { renderNav } from './UI/nav';
 
-let body = document.querySelector('body');
+const body = document.querySelector('body');
 renderLayout(body);
 
-let header = document.querySelector('header');
+const header = document.querySelector('header');
 renderHeader(header);
+
+const nav = document.querySelector('nav');
+renderNav(nav);

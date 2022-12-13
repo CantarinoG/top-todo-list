@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 :root {
     --light: #FFFFFF;
     --dark: #353535;
     --grey: #D2D7DF;
     --unbounded: 'Unbounded', cursive;
+    --roboto: 'Roboto', sans-serif;
 }
 
 * {
@@ -28,6 +30,7 @@ header {
 nav {
     flex: 2;
     height: 90vh;
+    overflow-y: auto;
 }
 
 main {

@@ -1,0 +1,40 @@
+nav {
+    font-family: var(--roboto);
+    background-color: var(--grey);
+    text-align: center;
+}
+
+nav ul {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+nav li button {
+    color: var(--light);
+    background-color: var(--dark);
+    padding: 2px;
+    border-radius: 8px;
+    border: transparent;
+    font-size: larger;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+nav li button:hover {
+    color: var(--dark);
+    background-color: var(--light);
+    transition: 0.3s;
+}
+
+nav span {
+    font-size: xx-large;
+    font-weight: 700;
+}
+
+#add {
+    color: var(--dark);
+    background-color: var(--light);
+    font-weight: 700;
+}
