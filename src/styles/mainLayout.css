@@ -1,12 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+:root {
+    --light: #FFFFFF;
+    --dark: #353535;
+    --grey: #D2D7DF;
+    --unbounded: 'Unbounded', cursive;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: 1px solid red;
 }
 
 header {
     height: 10vh;
-    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark);
 }
 
 .main-container {
@@ -16,11 +28,9 @@ header {
 nav {
     flex: 2;
     height: 90vh;
-    background-color: saddlebrown;
 }
 
 main {
     flex: 8;
     height: 90vh;
-    background-color: black;
 }

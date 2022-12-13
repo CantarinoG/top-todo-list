@@ -1,7 +1,5 @@
-const body = document.querySelector('body');
-
-export function renderLayout() {
-    body.innerHTML = `
+export function renderLayout(query) {
+    query.innerHTML = `
     <header></header>
     <div class="main-container">
         <nav></nav>
