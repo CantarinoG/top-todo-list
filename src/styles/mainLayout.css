@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 :root {
     --light: #FFFFFF;
-    --dark: #353535;
+    --dark: #0d1321;
     --grey: #D2D7DF;
     --unbounded: 'Unbounded', cursive;
     --roboto: 'Roboto', sans-serif;
@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 header {

@@ -1,7 +1,9 @@
 nav {
     font-family: var(--roboto);
-    background-color: var(--grey);
-    text-align: center;
+    background-color: var(--dark);
+    color: var(--light);
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 nav ul {
@@ -33,8 +35,20 @@ nav span {
     font-weight: 700;
 }
 
+#add-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+}
+
 #add {
     color: var(--dark);
     background-color: var(--light);
     font-weight: 700;
+}
+
+.icon {
+    height: 26.4px;
+    width: 26.4px;
+    filter: invert(100%) sepia(99%) saturate(119%) hue-rotate(196deg) brightness(116%) contrast(100%);
 }
