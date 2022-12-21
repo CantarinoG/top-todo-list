@@ -52,3 +52,11 @@ nav span {
     width: 26.4px;
     filter: invert(100%) sepia(99%) saturate(119%) hue-rotate(196deg) brightness(116%) contrast(100%);
 }
+
+.badger {
+    display: inline;
+    background-color: var(--light);
+    padding: 1px;
+    color: var(--dark);
+    border-radius: 2px;
+}
