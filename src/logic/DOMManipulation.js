@@ -28,12 +28,21 @@ export function testShit() {
 
     const addProjectBtn = document.querySelector('#add');
 
+    addProjectBtn.addEventListener('click', () => {
+        let name = prompt('Name your new project');
+        if (name != null && name != '') {
+            let newProject = new Project(name);
+            appHandler.addProject(newProject);
+            renderProjectsTab(projectsUl, appHandler.getProjects());
+        }
+    });
+
     const projectsUl = document.querySelector('#projects-list');
 
     function renderProjectsTab(containerElement, projectList) {
         let HTMLContent = '';
         for (let i = 0; i < projectList.length; i++) {
-            HTMLContent += `<li><img class="icon" src="${project}" alt="Project Icon"><button>${projectList[i].getName()}</button>&nbsp<div class="badger">${projectList[i].getSize()}</div>
+            HTMLContent += `<li><img class="icon" src="${project}" alt="Project Icon"><button id="open-btn-${i}">${projectList[i].getName()}</button>&nbsp<div class="badger">${projectList[i].getSize()}</div>
             <button id="edt-btn-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button><button id="del-btn-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"</button>
             </li>`;
         }
@@ -41,6 +50,8 @@ export function testShit() {
         addProjectListeners(projectList);
 
     }
+
+    const main = document.querySelector("body > div > main");
 
     function addProjectListeners(projectList) {
         for (let i = 0; i < projectList.length; i++) {
@@ -52,19 +63,24 @@ export function testShit() {
                 appHandler.editProject(projectList[i]);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
             }
+            document.getElementById(`open-btn-${i}`).onclick = () => {
+                renderProjectContent(main, appHandler.getProjects()[i]);
+                //let project = appHandler.getProjects()[i].getName();
+                //alert(project);
+            }
         }
     }
 
-    addProjectBtn.addEventListener('click', () => {
-        let name = prompt('Name your new project');
-        if (name != null && name != '') {
-            let newProject = new Project(name);
-            appHandler.addProject(newProject);
-            renderProjectsTab(projectsUl, appHandler.getProjects());
+    function renderProjectContent(containerElement, project) {
+        let HTMLContent = '<ul>';
+        for (let i = 0; i < project.getTasks().length; i++) {
+            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span></li>`;
         }
-    });
+        HTMLContent += '</ul><button>Add Task</button>';
+        containerElement.innerHTML = HTMLContent;
+    }
 
+    function addNewTaskListener() {
 
-
-
+    }
 }
