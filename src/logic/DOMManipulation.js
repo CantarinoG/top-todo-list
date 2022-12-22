@@ -21,6 +21,7 @@ export function renderPage() {
 
 import { AppHandler } from "./AppHandler";
 import { Project } from "./Project";
+import { Task } from "./Task";
 
 export function testShit() {
 
@@ -76,11 +77,19 @@ export function testShit() {
         for (let i = 0; i < project.getTasks().length; i++) {
             HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span></li>`;
         }
-        HTMLContent += '</ul><button>Add Task</button>';
+        HTMLContent += '</ul><button id="add-task">Add Task</button>';
         containerElement.innerHTML = HTMLContent;
+        let addTaskBtn = document.querySelector("#add-task");
+        addNewTaskListener(addTaskBtn, project);
     }
 
-    function addNewTaskListener() {
-
+    function addNewTaskListener(button, project) {
+        button.onclick = () => {
+            let name = prompt("Choose your task name");
+            let description = prompt("Choose your task description");
+            let task = new Task(name, description);
+            project.addTask(task);
+            renderProjectContent(main, project)
+        }
     }
 }

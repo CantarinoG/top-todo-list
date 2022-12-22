@@ -6,6 +6,10 @@ export class Project {
         this.tasks = tasks;
     }
 
+    addTask(task) {
+        this.tasks.push(task);
+    }
+
     setName(name) {
         this.name = name;
     }
