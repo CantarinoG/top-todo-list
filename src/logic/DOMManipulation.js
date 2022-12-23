@@ -158,7 +158,7 @@ export function main() {
         }
     }
 
-    let projectAllTasks = new Project("All")
+    let projectAllTasks = new Project("All");
     updateAllTasks();
     renderProjectContent(main, projectAllTasks);
 
@@ -176,6 +176,26 @@ export function main() {
     const allTasksBtn = document.querySelector("body > div > nav > ul:nth-child(1) > li:nth-child(1) > button");
     allTasksBtn.onclick = () => {
         updateAllTasks();
+        renderProjectContent(main, projectAllTasks);
+    }
+
+    function updateTodayTasks() {
+        let time = new Date();
+        let formattedDate = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
+        let todayTasks = [];
+        for (let i = 0; i < appHandler.getProjects().length; i++) {
+            for (let j = 0; j < appHandler.getProjects()[i].getTasks().length; j++) {
+                if (appHandler.getProjects()[i].getTasks()[j].getDate() == formattedDate) {
+                    todayTasks.push(appHandler.getProjects()[i].getTasks()[j]);
+                }
+            }
+        }
+        projectAllTasks.setTasks(todayTasks);
+    }
+
+    const todayTasksBtn = document.querySelector("body > div > nav > ul:nth-child(1) > li:nth-child(2) > button");
+    todayTasksBtn.onclick = () => {
+        updateTodayTasks();
         renderProjectContent(main, projectAllTasks);
     }
 
