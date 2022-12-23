@@ -16,15 +16,4 @@ export class AppHandler {
         this.projects[this.projects.indexOf(project)].setName(name);
     }
 
-
-
-    /*
-        getAllTasks() {
-            let allTasks = [];
-            for (let i = 0; i < this.projects.length; i++) {
-                for (let j = 0; j < this.projects[i].getTasks().length; j++) {
-                    allTasks.push(this.projects[i].getTasks()[j]);
-                }
-            }
-        }*/
 }

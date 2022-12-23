@@ -25,7 +25,27 @@ import { Task } from "./Task";
 
 export function main() {
 
-    const appHandler = new AppHandler();
+    let appHandler = new AppHandler();
+
+    let data;
+
+    if (localStorage.getItem('handlerData') != null) {
+        data = JSON.parse(localStorage.getItem('handlerData'));
+    }
+
+    for (let i = 0; i < data.projects.length; i++) {
+        let name = data.projects[i].name;
+        let proj = new Project(name);
+        appHandler.addProject(proj);
+        for (let j = 0; j < data.projects[i].tasks.length; j++) {
+            let name = data.projects[i].tasks[j].name;
+            let description = data.projects[i].tasks[j].description;
+            let date = data.projects[i].tasks[j].date;
+            let isCompleted = data.projects[i].tasks[j].isCompleted;
+            let task = new Task(name, description, date, isCompleted);
+            appHandler.getProjects()[i].addTask(task);
+        }
+    }
 
     const addProjectBtn = document.querySelector('#add');
 
@@ -35,6 +55,8 @@ export function main() {
             let newProject = new Project(name);
             appHandler.addProject(newProject);
             renderProjectsTab(projectsUl, appHandler.getProjects());
+            console.log(appHandler);
+            localStorage.setItem('handlerData', JSON.stringify(appHandler));
         }
     });
 
@@ -59,15 +81,16 @@ export function main() {
             document.getElementById(`del-btn-${i}`).onclick = () => {
                 appHandler.deleteProject(projectList[i]);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
             document.getElementById(`edt-btn-${i}`).onclick = () => {
                 appHandler.editProject(projectList[i]);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
             document.getElementById(`open-btn-${i}`).onclick = () => {
                 renderProjectContent(main, appHandler.getProjects()[i]);
-                //let project = appHandler.getProjects()[i].getName();
-                //alert(project);
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
         }
     }
@@ -108,6 +131,7 @@ export function main() {
                 if (name != null && name != '') {
                     project.getTasks()[i].setName(name);
                     renderProjectContent(main, project);
+                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
                 }
             }
             document.getElementById(`edt-desc-${i}`).onclick = () => {
@@ -118,16 +142,19 @@ export function main() {
                 if (desc == null) {} else {
                     project.getTasks()[i].setDescription(desc);
                     renderProjectContent(main, project);
+                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
                 }
 
             }
             document.getElementById(`date-${i}`).onchange = () => {
                 let date = document.getElementById(`date-${i}`).value;
                 project.getTasks()[i].setDate(date);
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
             document.getElementById(`check-${i}`).onclick = () => {
                 let checked = document.getElementById(`check-${i}`).checked;
                 project.getTasks()[i].setIsCompleted(checked);
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
             if (project != projectAllTasks) {
                 document.getElementById(`del-${i}`).onclick = () => {
@@ -135,6 +162,7 @@ export function main() {
                     project.deleteTask(task);
                     renderProjectContent(main, project);
                     renderProjectsTab(projectsUl, appHandler.getProjects());
+                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
                 }
             }
 
@@ -153,6 +181,7 @@ export function main() {
                 project.addTask(task);
                 renderProjectContent(main, project);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
+                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
 
         }
@@ -161,6 +190,7 @@ export function main() {
     let projectAllTasks = new Project("All");
     updateAllTasks();
     renderProjectContent(main, projectAllTasks);
+    renderProjectsTab(projectsUl, appHandler.getProjects());
 
     function updateAllTasks() {
         let allTasks = [];
@@ -222,10 +252,4 @@ export function main() {
         updateWeekTasks();
         renderProjectContent(main, projectAllTasks);
     }
-
-    /*
-    POR ONDE RETOMAR:
-    ADICIONAR O DESIGN
-    ADICIONAR STORAGE
-    */
 }
