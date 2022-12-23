@@ -75,7 +75,9 @@ export function testShit() {
     function renderProjectContent(containerElement, project) {
         let HTMLContent = '<ul>';
         for (let i = 0; i < project.getTasks().length; i++) {
-            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span></li>`;
+            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span><button><img class="icon" src="${edit}" alt="Edit Icon"></button>
+            <span>${project.getTasks()[i].getDescription()}</span><button><img class="icon" src="${edit}" alt="Edit Icon"></button>
+            <input type="date"><input type="checkbox"><button><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
         }
         HTMLContent += '</ul><button id="add-task">Add Task</button>';
         containerElement.innerHTML = HTMLContent;
@@ -87,9 +89,25 @@ export function testShit() {
         button.onclick = () => {
             let name = prompt("Choose your task name");
             let description = prompt("Choose your task description");
-            let task = new Task(name, description);
-            project.addTask(task);
-            renderProjectContent(main, project)
+            if (description == null || description == "") {
+                description = "No description...";
+            }
+            if (name != null && name != '') {
+                let task = new Task(name, description);
+                project.addTask(task);
+                renderProjectContent(main, project);
+                renderProjectsTab(projectsUl, appHandler.getProjects());
+            }
+
         }
     }
+
+    /*
+    POR ONDE RETORMAR:
+    ARRUMAR BUG (NOME E DESCRIÇÃO NA CRIAÇÃO DE UMA TASK NÃO PODEM ESTAR VAZIOS)
+    ADICIONAR FUNCIONALIDADE PARA CADA BOTÃO DAS TASKS EXIBIDAS(EDIT NAME, EDIT DESCRIPTION, EDIT DATE, EDIT COMPLETED, DELETE)
+    *BEM SEMELHANTE AO QUE JÁ FOI FEITO NA TAB DE PROJECTS(USAR DE REFERÊNCIA)
+    ADICIONAR FUNCIONALIDADE PARA ALL, TODAY E THIS WEEK
+    ADICIONAR O DESIGN
+    */
 }
