@@ -7,7 +7,7 @@ export function renderNav(query) {
     <ul>
         <li><img class="icon" src="${all}" alt="All Icon"><button>All</button></li>
         <li><img class="icon" src="${today}" alt="Today Icon"><button>Today</button></li>
-        <li><img class="icon" src="${week}" alt="This week Icon"><button>This Week</button></li>
+        <li><img class="icon" src="${week}" alt="This week Icon"><button>Next 7 days</button></li>
     </ul>
     <span>Projects</span>
     <ul id="projects-list">

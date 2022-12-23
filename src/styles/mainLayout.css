@@ -36,4 +36,5 @@ nav {
 main {
     flex: 8;
     height: 90vh;
+    overflow-y: auto;
 }

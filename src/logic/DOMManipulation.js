@@ -199,28 +199,32 @@ export function main() {
         renderProjectContent(main, projectAllTasks);
     }
 
-    /*
-        
+    function updateWeekTasks() {
+        let timeNow = Date.now();
+        let timeNextWeek = timeNow + 604800000;
 
-        function renderAllTasks(containerElement) {
-            let HTMLContent = '<ul>';
-            for (let i = 0; i < appHandler.getProjects().length; i++) {
-                for (let j = 0; j < appHandler.getProjects()[i].getTasks().length; j++) {
-                    HTMLContent += `<li><span>${appHandler.getProjects()[i].getTasks()[j].getName()}</span><button id="edt-name-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
-                <span>${appHandler.getProjects()[i].getTasks()[j].getDescription()}</span><button id="edt-desc-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
-                <input id="date-${i}" type="date" value="${appHandler.getProjects()[i].getTasks()[j].getDate()}"><input id="check-${i}" type="checkbox" `;
-                    if (appHandler.getProjects()[i].getTasks()[j].getIsCompleted()) {
-                        HTMLContent += "checked";
-                    }
-                    HTMLContent += `><button id="del-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
+
+        let weekTasks = [];
+        for (let i = 0; i < appHandler.getProjects().length; i++) {
+            for (let j = 0; j < appHandler.getProjects()[i].getTasks().length; j++) {
+                let date = new Date(appHandler.getProjects()[i].getTasks()[j].getDate());
+                date = date.getTime();
+                if (date > timeNow && date < timeNextWeek) {
+                    weekTasks.push(appHandler.getProjects()[i].getTasks()[j]);
                 }
             }
-            containerElement.innerHTML = HTMLContent;
         }
-    */
+        projectAllTasks.setTasks(weekTasks);
+    }
+
+    const weekTasksBtn = document.querySelector("body > div > nav > ul:nth-child(1) > li:nth-child(3) > button");
+    weekTasksBtn.onclick = () => {
+        updateWeekTasks();
+        renderProjectContent(main, projectAllTasks);
+    }
+
     /*
     POR ONDE RETOMAR:
-    ADICIONAR FUNCIONALIDADE PARA ALL, TODAY E THIS WEEK
     ADICIONAR O DESIGN
     ADICIONAR STORAGE
     */
