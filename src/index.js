@@ -5,5 +5,5 @@ import './styles/nav.css';
 import { renderPage } from './logic/DOMManipulation';
 renderPage();
 
-import { testShit } from './logic/DOMManipulation';
-testShit();
+import { main } from './logic/DOMManipulation';
+main();

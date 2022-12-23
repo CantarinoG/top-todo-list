@@ -23,7 +23,7 @@ import { AppHandler } from "./AppHandler";
 import { Project } from "./Project";
 import { Task } from "./Task";
 
-export function testShit() {
+export function main() {
 
     const appHandler = new AppHandler();
 
@@ -81,13 +81,24 @@ export function testShit() {
             if (project.getTasks()[i].getIsCompleted()) {
                 HTMLContent += "checked";
             }
-            HTMLContent += `><button id="del-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
+            if (project != projectAllTasks) {
+                HTMLContent += `><button id="del-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
+            } else {
+                HTMLContent += `></li>`;
+            }
+
         }
-        HTMLContent += '</ul><button id="add-task">Add Task</button>';
+        if (project != projectAllTasks) {
+            HTMLContent += '</ul><button id="add-task">Add Task</button>';
+        }
         containerElement.innerHTML = HTMLContent;
-        let addTaskBtn = document.querySelector("#add-task");
+
         addTaskListeners(project);
-        addNewTaskListener(addTaskBtn, project);
+        if (project != projectAllTasks) {
+            let addTaskBtn = document.querySelector("#add-task");
+            addNewTaskListener(addTaskBtn, project);
+        }
+
     }
 
     function addTaskListeners(project) {
@@ -118,12 +129,15 @@ export function testShit() {
                 let checked = document.getElementById(`check-${i}`).checked;
                 project.getTasks()[i].setIsCompleted(checked);
             }
-            document.getElementById(`del-${i}`).onclick = () => {
-                let task = project.getTasks()[i];
-                project.deleteTask(task);
-                renderProjectContent(main, project);
-                renderProjectsTab(projectsUl, appHandler.getProjects());
+            if (project != projectAllTasks) {
+                document.getElementById(`del-${i}`).onclick = () => {
+                    let task = project.getTasks()[i];
+                    project.deleteTask(task);
+                    renderProjectContent(main, project);
+                    renderProjectsTab(projectsUl, appHandler.getProjects());
+                }
             }
+
         }
     }
 
@@ -144,11 +158,50 @@ export function testShit() {
         }
     }
 
+    let projectAllTasks = new Project("All")
+    updateAllTasks();
+    renderProjectContent(main, projectAllTasks);
+
+    function updateAllTasks() {
+        let allTasks = [];
+        for (let i = 0; i < appHandler.getProjects().length; i++) {
+            for (let j = 0; j < appHandler.getProjects()[i].getTasks().length; j++) {
+                allTasks.push(appHandler.getProjects()[i].getTasks()[j]);
+            }
+        }
+        projectAllTasks.setTasks(allTasks);
+
+    }
+
+    const allTasksBtn = document.querySelector("body > div > nav > ul:nth-child(1) > li:nth-child(1) > button");
+    allTasksBtn.onclick = () => {
+        updateAllTasks();
+        renderProjectContent(main, projectAllTasks);
+    }
+
     /*
-    POR ONDE RETORMAR:
-    ADICIONAR FUNCIONALIDADE PARA CADA BOTÃO DAS TASKS EXIBIDAS(EDIT NAME, EDIT DESCRIPTION, EDIT DATE, EDIT COMPLETED, DELETE)
-    *BEM SEMELHANTE AO QUE JÁ FOI FEITO NA TAB DE PROJECTS(USAR DE REFERÊNCIA)
+        
+
+        function renderAllTasks(containerElement) {
+            let HTMLContent = '<ul>';
+            for (let i = 0; i < appHandler.getProjects().length; i++) {
+                for (let j = 0; j < appHandler.getProjects()[i].getTasks().length; j++) {
+                    HTMLContent += `<li><span>${appHandler.getProjects()[i].getTasks()[j].getName()}</span><button id="edt-name-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
+                <span>${appHandler.getProjects()[i].getTasks()[j].getDescription()}</span><button id="edt-desc-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
+                <input id="date-${i}" type="date" value="${appHandler.getProjects()[i].getTasks()[j].getDate()}"><input id="check-${i}" type="checkbox" `;
+                    if (appHandler.getProjects()[i].getTasks()[j].getIsCompleted()) {
+                        HTMLContent += "checked";
+                    }
+                    HTMLContent += `><button id="del-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
+                }
+            }
+            containerElement.innerHTML = HTMLContent;
+        }
+    */
+    /*
+    POR ONDE RETOMAR:
     ADICIONAR FUNCIONALIDADE PARA ALL, TODAY E THIS WEEK
     ADICIONAR O DESIGN
+    ADICIONAR STORAGE
     */
 }

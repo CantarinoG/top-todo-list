@@ -25,4 +25,7 @@ export class Project {
     getTasks() {
         return this.tasks;
     }
+    setTasks(tasks) {
+        this.tasks = tasks;
+    }
 }
