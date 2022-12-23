@@ -1,7 +1,7 @@
 export class Task {
 
 
-    constructor(name, description, date = null, isCompleted = false) {
+    constructor(name, description, date = "0000-00-00", isCompleted = false) {
         this.name = name;
         this.description = description;
         this.date = date;

@@ -75,14 +75,56 @@ export function testShit() {
     function renderProjectContent(containerElement, project) {
         let HTMLContent = '<ul>';
         for (let i = 0; i < project.getTasks().length; i++) {
-            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span><button><img class="icon" src="${edit}" alt="Edit Icon"></button>
-            <span>${project.getTasks()[i].getDescription()}</span><button><img class="icon" src="${edit}" alt="Edit Icon"></button>
-            <input type="date"><input type="checkbox"><button><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
+            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span><button id="edt-name-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
+            <span>${project.getTasks()[i].getDescription()}</span><button id="edt-desc-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
+            <input id="date-${i}" type="date" value="${project.getTasks()[i].getDate()}"><input id="check-${i}" type="checkbox" `;
+            if (project.getTasks()[i].getIsCompleted()) {
+                HTMLContent += "checked";
+            }
+            HTMLContent += `><button id="del-${i}"><img class="icon" src="${deleteIcon}" alt="Delete Icon"></button></li>`;
         }
         HTMLContent += '</ul><button id="add-task">Add Task</button>';
         containerElement.innerHTML = HTMLContent;
         let addTaskBtn = document.querySelector("#add-task");
+        addTaskListeners(project);
         addNewTaskListener(addTaskBtn, project);
+    }
+
+    function addTaskListeners(project) {
+        for (let i = 0; i < project.getTasks().length; i++) {
+            document.getElementById(`edt-name-${i}`).onclick = () => {
+                let name = prompt("Choose a new name:");
+                if (name != null && name != '') {
+                    project.getTasks()[i].setName(name);
+                    renderProjectContent(main, project);
+                }
+            }
+            document.getElementById(`edt-desc-${i}`).onclick = () => {
+                let desc = prompt("Choose a new description:");
+                if (desc == "") {
+                    desc = "No description...";
+                }
+                if (desc == null) {} else {
+                    project.getTasks()[i].setDescription(desc);
+                    renderProjectContent(main, project);
+                }
+
+            }
+            document.getElementById(`date-${i}`).onchange = () => {
+                let date = document.getElementById(`date-${i}`).value;
+                project.getTasks()[i].setDate(date);
+            }
+            document.getElementById(`check-${i}`).onclick = () => {
+                let checked = document.getElementById(`check-${i}`).checked;
+                project.getTasks()[i].setIsCompleted(checked);
+            }
+            document.getElementById(`del-${i}`).onclick = () => {
+                let task = project.getTasks()[i];
+                project.deleteTask(task);
+                renderProjectContent(main, project);
+                renderProjectsTab(projectsUl, appHandler.getProjects());
+            }
+        }
     }
 
     function addNewTaskListener(button, project) {
@@ -104,7 +146,6 @@ export function testShit() {
 
     /*
     POR ONDE RETORMAR:
-    ARRUMAR BUG (NOME E DESCRIÇÃO NA CRIAÇÃO DE UMA TASK NÃO PODEM ESTAR VAZIOS)
     ADICIONAR FUNCIONALIDADE PARA CADA BOTÃO DAS TASKS EXIBIDAS(EDIT NAME, EDIT DESCRIPTION, EDIT DATE, EDIT COMPLETED, DELETE)
     *BEM SEMELHANTE AO QUE JÁ FOI FEITO NA TAB DE PROJECTS(USAR DE REFERÊNCIA)
     ADICIONAR FUNCIONALIDADE PARA ALL, TODAY E THIS WEEK
