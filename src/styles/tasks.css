@@ -1,0 +1,74 @@
+main {
+    padding: 5%;
+}
+
+main li {
+    margin-top: 12px;
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: 2fr 28px 6fr 28px 1fr 1fr 28px;
+    text-align: center;
+    font-family: var(--roboto);
+    background-color: rgb(241, 241, 241);
+    padding: 4px;
+    border-radius: 6px;
+    border-left: 4px solid var(--dark);
+    line-height: 30px;
+}
+
+main li button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+main img[alt="Delete Icon"] {
+    filter: invert(27%) sepia(50%) saturate(2918%) hue-rotate(344deg) brightness(83%) contrast(90%) !important;
+}
+
+main input[type="date"] {
+    font-family: var(--roboto);
+    border: none;
+    border-radius: 8px;
+    font-size: small;
+}
+
+main li button:hover {
+    background-color: rgb(210, 210, 210);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+main li input {
+    cursor: pointer;
+}
+
+main li button img {
+    filter: brightness(0) !important;
+}
+
+main span {
+    text-overflow: ellipsis;
+}
+
+main>button {
+    margin-top: 12px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: var(--dark);
+    color: var(--light);
+    font-family: var(--roboto);
+    padding: 3px;
+    border-radius: 8px;
+    border: transparent;
+    cursor: pointer;
+    font-size: x-large;
+    transition: 0.3s;
+}
+
+main>button:hover {
+    transition: 0.3s;
+    background-color: #4f5053;
+}
