@@ -98,7 +98,13 @@ export function main() {
     function renderProjectContent(containerElement, project) {
         let HTMLContent = '<ul>';
         for (let i = 0; i < project.getTasks().length; i++) {
-            HTMLContent += `<li><span>${project.getTasks()[i].getName()}</span><button id="edt-name-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
+            HTMLContent += `<li`;
+
+            if (project.getTasks()[i].getIsCompleted()) {
+                HTMLContent += ` style="text-decoration: line-through;"`;
+            }
+
+            HTMLContent += `><span>${project.getTasks()[i].getName()}</span><button id="edt-name-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
             <span>${project.getTasks()[i].getDescription()}</span><button id="edt-desc-${i}"><img class="icon" src="${edit}" alt="Edit Icon"></button>
             <input id="date-${i}" type="date" value="${project.getTasks()[i].getDate()}"><input id="check-${i}" type="checkbox" `;
             if (project.getTasks()[i].getIsCompleted()) {
@@ -154,6 +160,7 @@ export function main() {
             document.getElementById(`check-${i}`).onclick = () => {
                 let checked = document.getElementById(`check-${i}`).checked;
                 project.getTasks()[i].setIsCompleted(checked);
+                renderProjectContent(main, project);
                 localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
             if (project != projectAllTasks) {

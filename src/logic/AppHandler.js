@@ -12,8 +12,11 @@ export class AppHandler {
         this.projects.splice(this.projects.indexOf(project), 1);
     }
     editProject(project) {
-        let name = prompt('Choose a new name for your project:')
-        this.projects[this.projects.indexOf(project)].setName(name);
+        let name = prompt('Choose a new name for your project:');
+        if (name != null && name != '') {
+            this.projects[this.projects.indexOf(project)].setName(name);
+        }
+
     }
 
 }
