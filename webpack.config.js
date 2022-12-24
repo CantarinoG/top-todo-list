@@ -10,7 +10,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'DoingIt',
         }),
-        new FaviconsWebpackPlugin('./src/favicon/logo.png')
+        new FaviconsWebpackPlugin('./src/favicon/logo.svg')
     ],
     output: {
         filename: 'main.js',
