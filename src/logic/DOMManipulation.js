@@ -31,20 +31,21 @@ export function main() {
 
     if (localStorage.getItem('handlerData') != null) {
         data = JSON.parse(localStorage.getItem('handlerData'));
-    }
 
-    for (let i = 0; i < data.projects.length; i++) {
-        let name = data.projects[i].name;
-        let proj = new Project(name);
-        appHandler.addProject(proj);
-        for (let j = 0; j < data.projects[i].tasks.length; j++) {
-            let name = data.projects[i].tasks[j].name;
-            let description = data.projects[i].tasks[j].description;
-            let date = data.projects[i].tasks[j].date;
-            let isCompleted = data.projects[i].tasks[j].isCompleted;
-            let task = new Task(name, description, date, isCompleted);
-            appHandler.getProjects()[i].addTask(task);
+        for (let i = 0; i < data.projects.length; i++) {
+            let name = data.projects[i].name;
+            let proj = new Project(name);
+            appHandler.addProject(proj);
+            for (let j = 0; j < data.projects[i].tasks.length; j++) {
+                let name = data.projects[i].tasks[j].name;
+                let description = data.projects[i].tasks[j].description;
+                let date = data.projects[i].tasks[j].date;
+                let isCompleted = data.projects[i].tasks[j].isCompleted;
+                let task = new Task(name, description, date, isCompleted);
+                appHandler.getProjects()[i].addTask(task);
+            }
         }
+
     }
 
     const addProjectBtn = document.querySelector('#add');
