@@ -259,4 +259,16 @@ export function main() {
         updateWeekTasks();
         renderProjectContent(main, projectAllTasks);
     }
+
+    const menuBtn = document.querySelector("body > header > img");
+    const nav = document.querySelector("body > div > nav");
+
+    menuBtn.onclick = () => {
+        if (!nav.classList.contains("visible")) {
+            nav.classList.add("visible");
+        } else {
+            nav.classList.remove("visible");
+        }
+    }
+
 }

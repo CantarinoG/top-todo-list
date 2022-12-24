@@ -2,3 +2,17 @@
     color: var(--light);
     font-family: var(--unbounded);
 }
+
+header img {
+    position: absolute;
+    top: 19.5px;
+    left: 19.5px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 780px) {
+    header img {
+        visibility: visible;
+    }
+}

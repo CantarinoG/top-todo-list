@@ -21,6 +21,7 @@ header {
     align-items: center;
     justify-content: center;
     background-color: var(--dark);
+    position: relative;
 }
 
 .main-container {
@@ -82,4 +83,13 @@ main {
 
 *::-webkit-scrollbar-thumb:active {
     background-color: #000000;
+}
+
+@media only screen and (max-width: 780px) {
+    .visible {
+        display: block;
+    }
+    .main-container {
+        flex-direction: column;
+    }
 }
