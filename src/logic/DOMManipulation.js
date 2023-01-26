@@ -1,10 +1,13 @@
 import { renderLayout } from "../UI/mainLayout";
 import { renderHeader } from '../UI/header';
 import { renderNav } from '../UI/nav';
+import { renderAut } from "../UI/aut";
 
 import project from '../icons/project.svg';
 import deleteIcon from '../icons/delete.svg';
 import edit from '../icons/edit.svg';
+
+import { signInGoogle, signInAnon, signOutUser } from "./fireBaseManipulation";
 
 export function renderPage() {
     const body = document.querySelector('body');
@@ -15,6 +18,9 @@ export function renderPage() {
 
     const nav = document.querySelector('nav');
     renderNav(nav);
+
+    const autContainer = document.querySelector('.aut');
+    renderAut(autContainer);
 }
 
 /***************************************/
@@ -271,5 +277,21 @@ export function main() {
             nav.classList.remove("visible");
         }
     }
+
+    /************************ */
+    const logGoogleBtn = document.querySelector("#log-google-btn");
+    logGoogleBtn.addEventListener("click", () => {
+        signInGoogle();
+    });
+
+    const logAnonBtn = document.querySelector("#log-anon-btn");
+    logAnonBtn.addEventListener("click", () => {
+        signInAnon(); 
+    });
+
+    const logOutBtn = document.querySelector("#log-out-btn");
+    logOutBtn.addEventListener("click", () => {
+        signOutUser();
+    });
 
 }

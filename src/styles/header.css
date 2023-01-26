@@ -11,6 +11,26 @@ header img {
     visibility: hidden;
 }
 
+#log-out-btn {
+    position: absolute;
+    top: 19.5px;
+    right: 19.5px;
+    cursor: pointer;
+    font-family: var(--unbounded);
+    color: var(--light);
+    padding: 8px;
+    background-color: transparent;
+    border: 2px solid var(--light);
+    transition: 0.5s;
+    display: block;
+    border-radius: 4px;
+}
+
+#log-out-btn:hover {
+    background-color: var(--light);
+    color: var(--dark);
+}
+
 @media only screen and (max-width: 780px) {
     header img {
         visibility: visible;

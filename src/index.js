@@ -8,3 +8,7 @@ renderPage();
 
 import { main } from './logic/DOMManipulation';
 main();
+
+import { fbInit, initFirebaseAuth } from './logic/fireBaseManipulation';
+fbInit();
+initFirebaseAuth();
