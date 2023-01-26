@@ -19,6 +19,7 @@ import {
   updateDoc,
   doc, 
   serverTimestamp,
+  where
 } from 'firebase/firestore';
 import { 
   getStorage,
@@ -49,19 +50,6 @@ export async function signInGoogle() {
     await signInWithPopup(getAuth(), provider);
   }
 
-export async function signInAnon() {
-    const auth = getAuth();
-signInAnonymously(auth)
-  .then(() => {
-    console.log("Welcome!")
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
-  });
-}
-
 export function signOutUser() {
   signOut(getAuth());
 }
@@ -84,3 +72,52 @@ export function initFirebaseAuth() {
       autContainer.classList.remove("invisible");
     }
   } 
+
+  export async function saveData(obj) {
+    try {await setDoc(doc(getFirestore(), "data", getAuth().currentUser.uid), {
+      id: getAuth().currentUser.uid,
+      data: obj
+    });}
+    catch(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    }
+  }
+
+  export function loadData() {
+
+    let loadData = new Promise(function(resolve) {
+  
+      const userData = query(collection(getFirestore(), 'data'), where("id", "==", `${getAuth().currentUser.uid}`));
+      
+       onSnapshot(userData, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            var data = change.doc.data();
+            resolve(JSON.parse(data.data));
+          
+        });
+      });
+  
+        
+      
+    });
+
+    return loadData;
+
+  }
+
+   
+
+  /*
+  export async function loadData() {
+ 
+    const userData = query(collection(getFirestore(), 'data'), where("id", "==", `${getAuth().currentUser.uid}`));
+    
+     onSnapshot(userData, function(snapshot) {
+      snapshot.docChanges().forEach(function(change) {
+          var data = change.doc.data();
+          console.log(JSON.parse(data.data));
+          return JSON.parse(data.data);
+        
+      });
+    });
+  }*/

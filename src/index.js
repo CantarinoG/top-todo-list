@@ -6,9 +6,10 @@ import './styles/tasks.css';
 import { renderPage } from './logic/DOMManipulation';
 renderPage();
 
-import { main } from './logic/DOMManipulation';
-main();
-
 import { fbInit, initFirebaseAuth } from './logic/fireBaseManipulation';
 fbInit();
 initFirebaseAuth();
+
+import { main } from './logic/DOMManipulation';
+main();
+

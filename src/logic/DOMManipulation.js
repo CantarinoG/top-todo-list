@@ -7,7 +7,7 @@ import project from '../icons/project.svg';
 import deleteIcon from '../icons/delete.svg';
 import edit from '../icons/edit.svg';
 
-import { signInGoogle, signInAnon, signOutUser } from "./fireBaseManipulation";
+import { signInGoogle, signOutUser, saveData, loadData } from "./fireBaseManipulation";
 
 export function renderPage() {
     const body = document.querySelector('body');
@@ -35,25 +35,6 @@ export function main() {
 
     let data;
 
-    if (localStorage.getItem('handlerData') != null) {
-        data = JSON.parse(localStorage.getItem('handlerData'));
-
-        for (let i = 0; i < data.projects.length; i++) {
-            let name = data.projects[i].name;
-            let proj = new Project(name);
-            appHandler.addProject(proj);
-            for (let j = 0; j < data.projects[i].tasks.length; j++) {
-                let name = data.projects[i].tasks[j].name;
-                let description = data.projects[i].tasks[j].description;
-                let date = data.projects[i].tasks[j].date;
-                let isCompleted = data.projects[i].tasks[j].isCompleted;
-                let task = new Task(name, description, date, isCompleted);
-                appHandler.getProjects()[i].addTask(task);
-            }
-        }
-
-    }
-
     const addProjectBtn = document.querySelector('#add');
 
     addProjectBtn.addEventListener('click', () => {
@@ -63,7 +44,7 @@ export function main() {
             appHandler.addProject(newProject);
             renderProjectsTab(projectsUl, appHandler.getProjects());
             console.log(appHandler);
-            localStorage.setItem('handlerData', JSON.stringify(appHandler));
+            saveData(JSON.stringify(appHandler));
         }
     });
 
@@ -78,7 +59,6 @@ export function main() {
         }
         containerElement.innerHTML = HTMLContent;
         addProjectListeners(projectList);
-
     }
 
     const main = document.querySelector("body > div > main");
@@ -88,16 +68,15 @@ export function main() {
             document.getElementById(`del-btn-${i}`).onclick = () => {
                 appHandler.deleteProject(projectList[i]);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                saveData(JSON.stringify(appHandler));
             }
             document.getElementById(`edt-btn-${i}`).onclick = () => {
                 appHandler.editProject(projectList[i]);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                saveData(JSON.stringify(appHandler));
             }
             document.getElementById(`open-btn-${i}`).onclick = () => {
                 renderProjectContent(main, appHandler.getProjects()[i]);
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
             }
         }
     }
@@ -144,7 +123,7 @@ export function main() {
                 if (name != null && name != '') {
                     project.getTasks()[i].setName(name);
                     renderProjectContent(main, project);
-                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                    saveData(JSON.stringify(appHandler));
                 }
             }
             document.getElementById(`edt-desc-${i}`).onclick = () => {
@@ -155,20 +134,20 @@ export function main() {
                 if (desc == null) {} else {
                     project.getTasks()[i].setDescription(desc);
                     renderProjectContent(main, project);
-                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                    saveData(JSON.stringify(appHandler));
                 }
 
             }
             document.getElementById(`date-${i}`).onchange = () => {
                 let date = document.getElementById(`date-${i}`).value;
                 project.getTasks()[i].setDate(date);
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                saveData(JSON.stringify(appHandler));
             }
             document.getElementById(`check-${i}`).onclick = () => {
                 let checked = document.getElementById(`check-${i}`).checked;
                 project.getTasks()[i].setIsCompleted(checked);
                 renderProjectContent(main, project);
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                saveData(JSON.stringify(appHandler));
             }
             if (project != projectAllTasks) {
                 document.getElementById(`del-${i}`).onclick = () => {
@@ -176,7 +155,7 @@ export function main() {
                     project.deleteTask(task);
                     renderProjectContent(main, project);
                     renderProjectsTab(projectsUl, appHandler.getProjects());
-                    localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                    saveData(JSON.stringify(appHandler));
                 }
             }
 
@@ -195,7 +174,7 @@ export function main() {
                 project.addTask(task);
                 renderProjectContent(main, project);
                 renderProjectsTab(projectsUl, appHandler.getProjects());
-                localStorage.setItem('handlerData', JSON.stringify(appHandler));
+                saveData(JSON.stringify(appHandler));
             }
 
         }
@@ -214,7 +193,6 @@ export function main() {
             }
         }
         projectAllTasks.setTasks(allTasks);
-
     }
 
     const allTasksBtn = document.querySelector("body > div > nav > ul:nth-child(1) > li:nth-child(1) > button");
@@ -281,17 +259,59 @@ export function main() {
     /************************ */
     const logGoogleBtn = document.querySelector("#log-google-btn");
     logGoogleBtn.addEventListener("click", () => {
-        signInGoogle();
+        signInGoogle().then(() => {
+
+            
+
+            loadData().then((data) => {
+                for (let i = 0; i < data.projects.length; i++) {
+                    let name = data.projects[i].name;
+                    let proj = new Project(name);
+                    appHandler.addProject(proj);
+                    for (let j = 0; j < data.projects[i].tasks.length; j++) {
+                        let name = data.projects[i].tasks[j].name;
+                        let description = data.projects[i].tasks[j].description;
+                        let date = data.projects[i].tasks[j].date;
+                        let isCompleted = data.projects[i].tasks[j].isCompleted;
+                        let task = new Task(name, description, date, isCompleted);
+                        appHandler.getProjects()[i].addTask(task);
+                    }
+                }
+            });
+            
+
+
+            
+        renderProjectsTab(projectsUl, appHandler.getProjects());
+        updateAllTasks();
+        renderProjectContent(main, projectAllTasks);
+
+
+
+
+        });
+        
     });
 
     const logAnonBtn = document.querySelector("#log-anon-btn");
     logAnonBtn.addEventListener("click", () => {
-        signInAnon(); 
+        const autContainer = document.querySelector('.aut');
+        autContainer.classList.add("invisible");
+        appHandler = new AppHandler();
+        renderProjectsTab(projectsUl, appHandler.getProjects());
+        updateAllTasks();
+        renderProjectContent(main, projectAllTasks);
     });
 
     const logOutBtn = document.querySelector("#log-out-btn");
     logOutBtn.addEventListener("click", () => {
+        const autContainer = document.querySelector('.aut');
         signOutUser();
+        autContainer.classList.remove("invisible");
+        appHandler = new AppHandler();
+        renderProjectsTab(projectsUl, appHandler.getProjects());
+        updateAllTasks();
+        renderProjectContent(main, projectAllTasks);
     });
 
 }
