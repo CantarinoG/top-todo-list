@@ -260,6 +260,7 @@ export function main() {
     const logGoogleBtn = document.querySelector("#log-google-btn");
     logGoogleBtn.addEventListener("click", () => {
         signInGoogle().then(() => {
+            console.log("debug1");
 
             
 
@@ -284,7 +285,7 @@ export function main() {
 
             });
             
-
+            console.log("debug1");
 
 
 
