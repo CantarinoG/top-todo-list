@@ -277,14 +277,13 @@ export function main() {
                         appHandler.getProjects()[i].addTask(task);
                     }
                 }
-            });
-            
 
-
-            
-        renderProjectsTab(projectsUl, appHandler.getProjects());
+                renderProjectsTab(projectsUl, appHandler.getProjects());
         updateAllTasks();
         renderProjectContent(main, projectAllTasks);
+
+            });
+            
 
 
 
